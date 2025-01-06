@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Viewer</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+  <script>
+    async function fetchArticle() {
+      const params = new URLSearchParams(window.location.search);
+      const articleName = params.get("name");
+
+      if (!articleName) {
+        document.getElementById("content").innerText = "Vui lòng cung cấp tên bài báo trên URL.";
+        return;
+      }
+
+      try {
+        const response = await fetch("cctx.json");
+        const articles = await response.json();
+
+        const article = articles.find(a => a.name === articleName);
+
+        if (article) {
+          document.getElementById("content").innerHTML = `<h1>${article.name}</h1><p>Đang tải nội dung...</p>`;
+          const fileResponse = await fetch(article.word_link);
+          const arrayBuffer = await fileResponse.arrayBuffer();
+
+          mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+            .then(result => {
+              document.getElementById("content").innerHTML = `
+                <h1>${article.name}</h1>
+                <div class="article-content">${result.value}</div>
+                <p><a class="download-link" href="${article.word_link}" download>Tải về tệp Word</a></p>
+              `;
+            })
+            .catch(err => {
+              console.error("Lỗi khi chuyển đổi file:", err);
+              document.getElementById("content").innerText = "Không thể hiển thị nội dung tệp Word.";
+            });
+        } else {
+          document.getElementById("content").innerText = "Không tìm thấy bài báo.";
+        }
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu:", error);
+        document.getElementById("content").innerText = "Có lỗi xảy ra khi tải dữ liệu.";
+      }
+    }
+
+    window.onload = fetchArticle;
+  </script>
+</head>
+<body>
+  <div id="content" class="content">
+    <p>Đang tải...</p>
+  </div>
+</body>
+</html>
