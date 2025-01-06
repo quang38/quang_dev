@@ -1,0 +1,12 @@
+{
+    "files": [
+        {
+            "name": "Fix Steam",
+            "url": "https://github.com/quang38/quangdev_bonhochung/raw/main/Fix_steam.zip"
+        },
+        {
+            "name": "Another File",
+            "url": "https://github.com/quang38/quangdev_bonhochung/raw/main/Another_File.zip"
+        }
+    ]
+}

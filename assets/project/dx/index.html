@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <style>
+        /* Cài đặt phông chữ và background với màu tím xanh */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #4b027c9d, #080033); /* Gradient tím xanh */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Thiết kế container */
+        .container {
+            background-color: #fff;
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Thiết kế tiêu đề */
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Nút tải */
+        .btn-download {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #7B61FF; /* Màu tím */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+            margin-top: 20px;
+        }
+
+        /* Hiệu ứng hover cho nút tải */
+        .btn-download:hover {
+            background-color: #5d06a5; /* Màu tím đậm khi hover */
+            transform: scale(1.05);
+        }
+
+        /* Kiểm tra đường link có đúng */
+        .btn-download:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Thông tin tên file */
+        .name {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Cải thiện giao diện */
+        .alert {
+            color: red;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="name" id="namefile">Chào mừng đến với trang tải về!</h1>
+        <button class="btn-download" id="downloadBtn">Tải File</button>
+        <p id="alert" class="alert"></p>
+    </div>
+
+    <script>
+        // Lấy tham số 'file' từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileName = urlParams.get('file');
+        
+        console.log('Tham số file từ URL:', fileName);
+
+        // Kiểm tra nếu tham số 'file' có không
+        if (!fileName) {
+            document.querySelector('.container').style.display = 'none';
+            window.location.href = '404.html';
+        } else {
+            // Thay đổi tên nút tải file và tên file hiển thị
+            document.getElementById('downloadBtn').innerText = "Tải về";
+            document.getElementById('namefile').innerText = decodeURIComponent(fileName);
+        }
+
+        // Lắng nghe sự kiện khi nhấn nút tải
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Dữ liệu từ data.json:', data);
+                    // Tìm file trong data.json
+                    const file = data.files.find(f => f.name === decodeURIComponent(fileName));
+                    if (file) {
+                        // Tạo một link để tải file về
+                        const a = document.createElement('a');
+                        a.href = file.url;
+                        a.download = fileName + '.zip';  // Đặt tên file
+                        a.click();  // Mô phỏng click để tải file
+                    } else {
+                        // Hiển thị lỗi nếu file không tồn tại trong JSON
+                        document.getElementById('alert').innerText = "File không tồn tại!";
+                    }
+                })
+                .catch(error => {
+                    console.error('Có lỗi khi tải file:', error);
+                    document.getElementById('alert').innerText = 'Có lỗi khi tải dữ liệu JSON!';
+                });
+        });
+    </script>
+
+</body>
+</html>
