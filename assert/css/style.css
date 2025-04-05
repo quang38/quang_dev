@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-image: url(https://cdn.hostingviet.vn/data/tinymce/2023/hinh-nen-may-tinh-4k-1.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+.avata{
+
+    width: 100px;
+    height: auto;
+    border-radius: 50%;  /* Tạo hiệu ứng bo tròn cho hình ảnh */
+    margin-top: 3%;
+
+}
+
+
+/* Khối nổi ở giữa màn hình */
+.dd {
+    width: 80vw;
+    height: 70vh;
+    background: rgba(145, 145, 145, 0.6);
+    border-radius: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    padding: 20px;
+    text-align: center;
+}
+
+#name {
+    margin-top: 3%;
+    font-size: 3vw;  /* Cỡ chữ theo tỷ lệ của chiều rộng màn hình */
+    text-align: center; /* Căn giữa chữ */
+}
+
+#link {
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: center; /* Căn giữa các ảnh theo chiều ngang */
+    align-items: center; /* Căn giữa các ảnh theo chiều dọc */
+    position: absolute; /* Đặt vị trí tuyệt đối cho #link */
+    bottom: 20px; /* Khoảng cách từ phần tử #link đến đáy của dd là 20px */
+    width: 100%; /* Đảm bảo #link chiếm toàn bộ chiều rộng của dd */
+}
+
+/* Khi màn hình nhỏ hơn 1024px (Tablet và dưới) */
+@media screen and (max-width: 1024px) {
+    #name {
+        font-size: 5vw; /* Cỡ chữ tăng lên với kích thước màn hình nhỏ hơn */
+    }
+    #link{
+        bottom: 20px; /* Khoảng cách vẫn giữ 20px từ đáy */
+    }
+}
+
+/* Khi màn hình nhỏ hơn 768px (Mobile) */
+@media screen and (max-width: 768px) {
+    #name {
+        font-size: 7vw; /* Cỡ chữ sẽ lớn hơn nữa trên các thiết bị di động */
+    }
+    #link{
+        bottom: 20px; /* Khoảng cách vẫn giữ 20px từ đáy */
+    }
+}
+
+/* Khi màn hình nhỏ hơn 480px (Mobile rất nhỏ) */
+@media screen and (max-width: 480px) {
+    #name {
+        font-size: 9vw; /* Cỡ chữ sẽ rất lớn trên các thiết bị di động nhỏ */
+    }
+    #link{
+        bottom: 20px; /* Khoảng cách vẫn giữ 20px từ đáy */
+    }
+}
+
+
+#link img {
+    width: 50px;
+    height: auto;
+    border-radius: 50%;  /* Tạo hiệu ứng bo tròn cho hình ảnh */
+    margin: 10px;
+    transition: transform 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
+}
+
+#link img:hover {
+    transform: scale(1.2); /* Tăng kích thước lên 20% */
+}
