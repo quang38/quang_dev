@@ -24,5 +24,14 @@
 
 
     <script src="./assert/js/script.js"></script>
+
+
+      <audio id="audio" src="./assert/audio/audio.mp3" autoplay muted loop></audio>
+      <script>
+        window.addEventListener('click', function() {
+          document.getElementById('audio').muted = false;
+          document.getElementById('audio').play();
+        }, { once: true });
+      </script>
 </body>
 </html>
