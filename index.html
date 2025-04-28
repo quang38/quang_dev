@@ -28,10 +28,12 @@
 
       <audio id="audio" src="./assert/audio/audio.mp3" autoplay muted loop></audio>
       <script>
-        window.addEventListener('click', function() {
-          document.getElementById('audio').muted = false;
-          document.getElementById('audio').play();
-        }, { once: true });
+          // Lắng nghe sự kiện load của trang để tắt mute và phát nhạc
+            window.addEventListener('load', function() {
+              var audio = document.getElementById('audio');
+              audio.muted = false;  // Tắt chế độ mute khi trang tải xong
+              audio.play();         // Phát nhạc
+            });
       </script>
 </body>
 </html>
