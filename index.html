@@ -27,13 +27,23 @@
 
 
       <audio id="audio" src="./assert/audio/audio.mp3" autoplay muted loop></audio>
-      <script>
-          // Lắng nghe sự kiện load của trang để tắt mute và phát nhạc
+           <script>
+            // Lắng nghe sự kiện load của trang để phát nhạc (tắt mute)
             window.addEventListener('load', function() {
               var audio = document.getElementById('audio');
-              audio.muted = false;  // Tắt chế độ mute khi trang tải xong
-              audio.play();         // Phát nhạc
+              // Cố gắng phát nhạc khi trang tải xong
+              audio.play().catch(function(error) {
+                // Nếu gặp lỗi (ví dụ: trình duyệt chặn âm thanh), chờ người dùng click
+                console.log("Không thể phát âm thanh tự động, chờ người dùng click.");
+              });
             });
-      </script>
+        
+            // Lắng nghe sự kiện click vào bất kỳ đâu trên trang
+            window.addEventListener('click', function() {
+              var audio = document.getElementById('audio');
+              audio.muted = false;  // Tắt chế độ mute nếu chưa bật
+              audio.play();         // Phát nhạc khi người dùng click
+            });
+          </script>
 </body>
 </html>
